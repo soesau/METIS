@@ -53,7 +53,13 @@ include(./conf/gkbuild.cmake)
 # Add include directories.
 # i.e., the -I equivalent
 include_directories(build/xinclude)
-include_directories(${GKLIB_PATH}/include)
+
+if(DEFINED GKLIB_PATH AND NOT "${GKLIB_PATH}" STREQUAL "")
+  include_directories(${GKLIB_PATH}/include)
+else()
+  find_package(GKlib)
+  include_directories(${GKLIB_PATH}/include)
+endif()
 include_directories(${CMAKE_INSTALL_PREFIX}/include)
 
 # List of paths that the compiler will search for library files.
